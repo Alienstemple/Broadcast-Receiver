@@ -24,9 +24,4 @@ class MainActivity : AppCompatActivity() {
                 MY_PERMISSIONS_REQUEST_RECEIVE_SMS)
         }
     }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        // Разрегистрируем
-    }
 }
