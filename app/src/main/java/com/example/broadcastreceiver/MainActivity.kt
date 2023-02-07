@@ -12,12 +12,6 @@ class MainActivity : AppCompatActivity() {
         val MY_PERMISSIONS_REQUEST_RECEIVE_SMS = 1
     }
 
-    // Создали экземпляр receiver
-    private val smsReceiver = MySmsReceiver()
-
-    // Создали intent filter
-    private val filter = IntentFilter(Telephony.Sms.Intents.SMS_RECEIVED_ACTION)
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -28,15 +22,11 @@ class MainActivity : AppCompatActivity() {
             requestPermissions(
                 arrayOf(RECEIVE_SMS),
                 MY_PERMISSIONS_REQUEST_RECEIVE_SMS)
-        } else {
-            // Если разрешения есть, регистрируем receiver
-//            this.registerReceiver(smsReceiver, filter)
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
         // Разрегистрируем
-//        this.unregisterReceiver(smsReceiver)
     }
 }
