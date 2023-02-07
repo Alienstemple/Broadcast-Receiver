@@ -15,7 +15,7 @@ class MySmsReceiver : BroadcastReceiver() {
         if (intentAction != null) {
             when (intentAction) {
                 Telephony.Sms.Intents.SMS_RECEIVED_ACTION ->
-                    Toast.makeText(context, "Sms received", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Sms received", Toast.LENGTH_LONG).show()
 
             }
         }
