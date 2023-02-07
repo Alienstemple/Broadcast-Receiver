@@ -30,13 +30,13 @@ class MainActivity : AppCompatActivity() {
                 MY_PERMISSIONS_REQUEST_RECEIVE_SMS)
         } else {
             // Если разрешения есть, регистрируем receiver
-//            this.registerReceiver(smsReceiver, filter)
+            this.registerReceiver(smsReceiver, filter)
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
         // Разрегистрируем
-//        this.unregisterReceiver(smsReceiver)
+        this.unregisterReceiver(smsReceiver)
     }
 }
