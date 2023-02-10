@@ -16,11 +16,10 @@ class MySmsReceiver : BroadcastReceiver() {
         if (intentAction != null) {
             when (intentAction) {
                 Telephony.Sms.Intents.SMS_RECEIVED_ACTION -> {
-                    val message: String? = extras?.getString(Telephony.Sms.BODY)
-                    Toast.makeText(context, "Sms received: $message", Toast.LENGTH_LONG).show()
+//                    val message: String? = extras.get(SmsRetriever.EXTRA_SMS_MESSAGE)
+                    Toast.makeText(context, "Sms received", Toast.LENGTH_LONG).show()
                 }
 
-                // TODO text from intent (listener лк)
             }
         }
     }
