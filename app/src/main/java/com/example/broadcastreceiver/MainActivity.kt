@@ -1,6 +1,7 @@
 package com.example.broadcastreceiver
 
 import android.Manifest.permission.RECEIVE_SMS
+import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
@@ -33,28 +34,30 @@ class MainActivity : AppCompatActivity() {
         grantResults: IntArray,
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when (requestCode) {
-            MY_PERMISSIONS_REQUEST_RECEIVE_SMS,
-            -> {
-                if ((grantResults.isNotEmpty() &&
-                            grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                ) {
-                    Log.d("TAG", "Permission requested, before rgister rcv")
-                    registerSmsReceiver()
-                } else {
-                    Toast.makeText(this, "No permission!", Toast.LENGTH_LONG).show()
-                }
-                return
+        if (requestCode == MY_PERMISSIONS_REQUEST_RECEIVE_SMS) {
+            if ((grantResults.isNotEmpty() &&
+                        grantResults[0] == PackageManager.PERMISSION_GRANTED)
+            ) {
+                Log.d("TAG", "Permission requested, before rgister rcv")
+                registerSmsReceiver()
+            } else {
+                Toast.makeText(this, "No permission!", Toast.LENGTH_LONG).show()
             }
-            else -> {
-            }
+            return
         }
+
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        // send result back to Caller Activity
+
     }
 
     private fun registerSmsReceiver() {
         Log.d("TAG", "In register sms rcv")
         // Создали экземпляр receiver
-       smsReceiver = MySmsReceiver()
+        smsReceiver = MySmsReceiver()
 
         // Создали intent filter
         val filter = IntentFilter(Telephony.Sms.Intents.SMS_RECEIVED_ACTION)
