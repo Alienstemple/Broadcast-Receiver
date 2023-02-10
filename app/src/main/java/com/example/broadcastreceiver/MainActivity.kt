@@ -8,6 +8,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Telephony
 import android.util.Log
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
@@ -17,6 +20,23 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        Log.d("TAG", "We are in onCreate MainActivity")
+
+        // Стартуем вторую activity
+        val btn = findViewById<Button>(R.id.second_btn)
+        btn.setOnClickListener {
+            Log.d("TAG", "Before starting second activity")
+            intent = Intent(this, SecondActivity::class.java)
+            startActivity(intent)
+        }
+
+        /// Отработает после возврата из второй Activity
+        val smsTv = findViewById<TextView>(R.id.sms_tv)
+        val smsText = intent?.getStringExtra("SMS").toString()
+        Log.d("TAG", "onNewIntent called, extra string = $smsText")
+        smsTv.text = smsText
+
 
         if (checkSelfPermission(RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(
@@ -48,10 +68,12 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    override fun onNewIntent(intent: Intent?) {
+    override fun onNewIntent(intent: Intent?) { // FIXME не отрабатывает, onCreate вызывается
         super.onNewIntent(intent)
-        // send result back to Caller Activity
-
+        val smsTv = findViewById<TextView>(R.id.sms_tv)
+        val smsText = intent?.getStringExtra("SMS").toString()
+        Log.d("TAG", "onNewIntent called, extra string = $smsText")
+        smsTv.text = smsText
     }
 
     private fun registerSmsReceiver() {
