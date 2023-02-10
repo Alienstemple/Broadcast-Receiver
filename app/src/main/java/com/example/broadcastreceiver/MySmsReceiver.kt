@@ -15,20 +15,20 @@ class MySmsReceiver : BroadcastReceiver() {
         val intentAction = intent.action
 
         if (intentAction != null) {
-            when (intentAction) {
-                Telephony.Sms.Intents.SMS_RECEIVED_ACTION -> {
-                    val messages: Array<SmsMessage> =
-                        Telephony.Sms.Intents.getMessagesFromIntent(intent)
+            if (intentAction == Telephony.Sms.Intents.SMS_RECEIVED_ACTION) {
+                val messages: Array<SmsMessage> =
+                    Telephony.Sms.Intents.getMessagesFromIntent(intent)
 
-                    Toast.makeText(context,
-                        "Sms received: ${messages[0].messageBody}",
-                        Toast.LENGTH_LONG).show()
+                Toast.makeText(context,
+                    "Sms received: ${messages[0].messageBody}",
+                    Toast.LENGTH_LONG).show()
 
-                    Log.d("TAG", "Sms received, before starting MainActivity")
-                    val replyIntent = Intent("com.example.broadcastreceiver.intent.action.sms")
-                    replyIntent.putExtra("SMS", "Sms: ${messages[0].messageBody}")  // поставили строку в intent
-                    context.startActivity(replyIntent)  // Вызывается MainActivity
-                }
+                Log.d("TAG", "Sms received, before starting MainActivity")
+                val replyIntent = Intent("com.example.broadcastreceiver.intent.action.sms")
+                replyIntent.putExtra("SMS",
+                    "Sms: ${messages[0].messageBody}")  // поставили строку в intent
+                context.startActivity(replyIntent)  // Вызывается MainActivity
+
 
             }
         }
