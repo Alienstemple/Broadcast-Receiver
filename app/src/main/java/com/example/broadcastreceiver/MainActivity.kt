@@ -23,21 +23,6 @@ class MainActivity : AppCompatActivity() {
 
         Log.d("TAG", "We are in onCreate MainActivity")
 
-        // Стартуем вторую activity
-        val btn = findViewById<Button>(R.id.second_btn)
-        btn.setOnClickListener {
-            Log.d("TAG", "Before starting second activity")
-            intent = Intent(this, SecondActivity::class.java)
-            startActivity(intent)
-        }
-
-        /// Отработает после возврата из второй Activity
-        val smsTv = findViewById<TextView>(R.id.sms_tv)
-        val smsText = intent?.getStringExtra("SMS").toString()
-        Log.d("TAG", "onNewIntent called, extra string = $smsText")
-        smsTv.text = smsText
-
-
         if (checkSelfPermission(RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(
                 arrayOf(RECEIVE_SMS),
@@ -68,7 +53,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    override fun onNewIntent(intent: Intent?) { // FIXME не отрабатывает, onCreate вызывается
+    override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
         val smsTv = findViewById<TextView>(R.id.sms_tv)
         val smsText = intent?.getStringExtra("SMS").toString()
